@@ -1,0 +1,20 @@
+.header, .footer {
+    width: 100%;
+    background-color: brown;
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    color: #FFF;
+    text-align: center;
+    margin: 0;
+}
+
+.footer h4 {
+    color: #FFF;
+    font-weight: 400;
+}

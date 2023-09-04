@@ -1,0 +1,5 @@
+na interface define as configurações a serem utilizadas na função;
+import FormEvent que impede a tela de ser atualizada;
+função formatar moeda para moeda brasileira;
+Number(e.target.value) => converte o valor para número 
+condicional: verifica se tem valor para então mostrar conteúdo

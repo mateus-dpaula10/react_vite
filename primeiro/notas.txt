@@ -1,0 +1,5 @@
+useEffect => na primeira vez que executar ao alterar o valor 
+useRef => referencia ao campo especifico, 
+precisa atrelar o tipo de campo que faz referencia
+useMemo => evitar renderizacoes desnecessarias
+useCallback => evitar renderizacoes desnecessarias

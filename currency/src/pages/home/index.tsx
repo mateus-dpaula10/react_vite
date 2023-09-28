@@ -1,9 +1,7 @@
-import { useEffect, useState, FormEvent } from 'react'
-import styles from './home.module.css'
-import { BiSearch } from 'react-icons/bi'
-import { Link, useNavigate } from 'react-router-dom'
-
-// https://coinlib.io/api/v1/global?key=4ef8549ba2b2195f&pref=EUR
+import { useState, FormEvent, useEffect } from 'react'
+import styles from './index.module.css'
+import { BiSearchAlt2 } from 'react-icons/bi'
+import { Link, useNavigate} from 'react-router-dom'
 
 interface CoinProps{
     name: string;
@@ -14,48 +12,52 @@ interface CoinProps{
     market_cap: string;
     formatedPrice: string;
     formatedMarket: string;
+    numberDelta: number;
 }
 
 interface DataProps{
-    coins: CoinProps[];
+    coins: CoinProps[]
 }
 
-export function Home()
-{
+export function Home(){
     const [coins, setCoins] = useState<CoinProps[]>([])
     const [inputValue, setInputValue] = useState("")
     const navigate = useNavigate()
+    
     useEffect(() => {
         function getData(){
-            fetch('https://sujeitoprogramador.com/api-cripto/?key=4ef8549ba2b2195f')
+            // fetch(`https://coinlib.io/api/v1/global?key=4ef8549ba2b2195f&pref=BRL`, {
+            //     mode: "no-cors",
+            // })
+            fetch(`https://sujeitoprogramador.com/api-cripto/?key=4ef8549ba2b2195f`)
             .then(response => response.json())
             .then((data: DataProps) => {
-                let coinsData = data.coins.slice(0, 15);
+                let coinsData = data.coins.slice(0, 15)
 
                 let price = Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL"
                 })
 
-                const formatResult = coinsData.map((item) => {
+                const formatResult = coinsData.map( item => {
                     const formated = {
                         ...item,
                         formatedPrice: price.format(Number(item.price)),
                         formatedMarket: price.format(Number(item.market_cap)),
+                        numberDelta: parseFloat(item.delta_24h.replace(",", "."))
                     }
 
-                    return formated;
-                })            
+                    return formated
+                })
 
-                setCoins(formatResult);
+                setCoins(formatResult)
             })
         }
 
-        getData();
+        getData()
     }, [])
 
-    function handleSearch(e: FormEvent)
-    {
+    function handleSearch(e: FormEvent){
         e.preventDefault()
         if(inputValue === "") return;
 
@@ -66,12 +68,12 @@ export function Home()
         <main className={styles.container}>
             <form className={styles.form} onSubmit={handleSearch}>
                 <input 
-                    placeholder="Digite o símbolo da moeda:"       
-                    value={inputValue}              
+                    placeholder="Digite o símbolo da moeda:"
+                    value={inputValue}
                     onChange={ (e) => setInputValue(e.target.value) }
                 />
                 <button type="submit">
-                    <BiSearch size={30} color="#FFF" />
+                    <BiSearchAlt2 size={30} />
                 </button>
             </form>
 
@@ -99,8 +101,8 @@ export function Home()
                             <td className={styles.tdLabel} data-label="Preço">
                                 {coin.formatedPrice}
                             </td>
-                            <td className={Number(coin?.delta_24h) >= 0 ? styles.tdProfit : styles.tdLoss} data-label="Volume">
-                                <span>{coin.delta_24h}</span>
+                            <td className={coin.numberDelta >= 0 ? styles.tdProfit : styles.tdLoss } data-label="Volume">
+                                {coin.delta_24h}
                             </td>
                         </tr>
                     ))}

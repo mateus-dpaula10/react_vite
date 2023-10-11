@@ -34,6 +34,7 @@ export function Admin(){
         const linksRef = collection(db, "links")
         const queryRef = query(linksRef, orderBy("created", "asc"));
 
+        // snapshot -> observa dados no banco
         const unsub = onSnapshot(queryRef, (snapshot) => {
             let lista = [] as linkProps[]
 

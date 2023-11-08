@@ -4,12 +4,18 @@ import { router } from './App'
 import { RouterProvider } from 'react-router-dom'
 import './index.css'
 
+import { Toaster } from 'react-hot-toast'
+
 import CartProvider from './contexts/CartContext'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <CartProvider>
-      <RouterProvider router={router} />
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+    />
+    <RouterProvider router={router} />
     </CartProvider>
   </React.StrictMode>,
 )

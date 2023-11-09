@@ -1,0 +1,14 @@
+npm create vite@latest nome_projeto
+
+npm i react-router-dom
+
+npm install -D tailwindcss
+npx tailwindcss init
+em tailwind.config.js => 
+content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+],
+em index.css => 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

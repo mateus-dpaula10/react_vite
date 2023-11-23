@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { auth } from '../../services/firebaseConnection'
 import { createUserWithEmailAndPassword, updateProfile, signOut } from 'firebase/auth'
 import { AuthContext } from '../../contexts/AuthContext'
+import toast from 'react-hot-toast'
 
 const schema = z.object({
     name: z.string().nonempty("O campo nome é obrigatório"),
@@ -21,9 +22,9 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function Register() { 
+    const navigate = useNavigate()
     const { handleInfoUser } = useContext(AuthContext)
 
-    const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema),
         mode: "onChange"
@@ -51,6 +52,7 @@ export function Register() {
             })
             
             console.log("Cadastrado com sucesso!")
+            toast.success("Bem vindo ao Webcarros!")
             navigate("/dashboard", { replace: true })
         })
         .catch((error) => {
